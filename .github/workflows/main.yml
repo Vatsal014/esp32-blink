@@ -10,11 +10,11 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04  # Use a stable version instead of ubuntu-latest
+    runs-on: ubuntu-22.04  # Use stable Ubuntu version
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4  # Ensures repo is checked out properly
+        uses: actions/checkout@v4
 
       - name: Set up ESP-IDF
         run: |
@@ -35,8 +35,9 @@ jobs:
           idf.py set-target esp32
           idf.py build
 
+      # Force GitHub to refresh action dependencies
       - name: Upload Firmware
-        uses: actions/upload-artifact@v4  # Updated to latest version
+        uses: actions/upload-artifact@v4  # Updated to @v4
         with:
           name: esp32-firmware
           path: build/*.bin
