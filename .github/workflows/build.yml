@@ -23,10 +23,12 @@ jobs:
           git clone --recursive https://github.com/espressif/esp-idf.git ~/esp-idf
           cd ~/esp-idf
           ./install.sh
-          echo "source ~/esp-idf/export.sh" >> $GITHUB_ENV
+          
+      - name: Export ESP-IDF environment
+        run: echo "source $HOME/esp-idf/export.sh" >> $GITHUB_ENV
 
       - name: Configure and Build
         run: |
-          source ~/esp-idf/export.sh
+          source $GITHUB_ENV
           idf.py set-target esp32
           idf.py build
