@@ -23,12 +23,20 @@ jobs:
           git clone --recursive https://github.com/espressif/esp-idf.git ~/esp-idf
           cd ~/esp-idf
           ./install.sh
-          
-      - name: Export ESP-IDF environment
-        run: echo "source $HOME/esp-idf/export.sh" >> $GITHUB_ENV
+
+      - name: Load ESP-IDF environment
+        run: |
+          source $HOME/esp-idf/export.sh
+          echo "ESP-IDF environment loaded"
 
       - name: Configure and Build
         run: |
-          source $GITHUB_ENV
+          source $HOME/esp-idf/export.sh
           idf.py set-target esp32
           idf.py build
+
+      - name: Upload Firmware
+        uses: actions/upload-artifact@v3
+        with:
+          name: esp32-firmware
+          path: build/*.bin
